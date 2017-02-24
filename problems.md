@@ -1,9 +1,8 @@
 # Memory leaks:
-## Callbacks not completing
-  Problem: Resources that should be cleaned up on callback completion are not being cleaned up because the callback
-  never completes
-## Static tree reference
-  Problem: A static value is holding an ever growing list of references to other values
+## Database connections not closed
+  Problem: The connection should be closed in the exception handler
+  Class: DeviceDB
+  How to discover it: Look for h2 related things in the memory usage graph
 
 # False memory leaks:
 These may look like a memory leak, but they mirror actual scenarios you see in production code
@@ -14,6 +13,6 @@ These may look like a memory leak, but they mirror actual scenarios you see in p
 # Cpu performance problems:
 ## Expensive hashCode 
   Problem: An expensive hashcode is defined for something used as a key in a HashMap
-  Class: 
-  How to discover it:
+  Class: GuidAndName
+  How to discover it: Cpu profiling
   

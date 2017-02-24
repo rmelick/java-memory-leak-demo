@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class App {
-    private static final Logger LOGGER = LoggerFactory.getLogger(App.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
 
     public static void main(String[] args) throws InterruptedException {
         new App().run();
