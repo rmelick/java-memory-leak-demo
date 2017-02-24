@@ -32,3 +32,8 @@ dependencies {
 // Define the main class for the application
 mainClassName = 'com.github.rmelick.memory.app.App'
 
+test {
+    maxHeapSize = "512m"
+
+    jvmArgs '-XX:+HeapDumpOnOutOfMemoryError'
+}
