@@ -21,6 +21,7 @@ repositories {
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.22'
+    compile 'commons-lang:commons-lang:2.6'
     runtime 'org.slf4j:slf4j-simple:1.7.22'
 
     // Use JUnit test framework
@@ -28,5 +29,5 @@ dependencies {
 }
 
 // Define the main class for the application
-mainClassName = 'com.github.rmelick.memory.App'
+mainClassName = 'com.github.rmelick.memory.app.App'
 
