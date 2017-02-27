@@ -16,3 +16,6 @@ hs_err_pid*
 # h2 databases
 *.db
 *.db.old
+
+# profiler dumps
+*.hprof
