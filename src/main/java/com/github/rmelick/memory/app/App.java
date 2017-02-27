@@ -24,8 +24,6 @@ public class App {
         LOGGER.info("Starting application");
         final DeviceService deviceService = new DeviceServiceImpl();
 
-        VertxOptions vertxOptions = new VertxOptions();
-        vertxOptions.setWorkerPoolSize(100);
         Vertx vertx = Vertx.vertx();
         HttpServer httpServer = vertx.createHttpServer();
         httpServer.requestHandler(request -> {

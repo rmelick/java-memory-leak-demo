@@ -1,4 +1,4 @@
-package com.github.rmelick.memory.service;
+package com.github.rmelick.memory.service.cache;
 
 /**
  * Value and a timestamp

@@ -1,4 +1,4 @@
-package com.github.rmelick.memory.service;
+package com.github.rmelick.memory.service.cache;
 
 import com.github.rmelick.memory.api.DeviceUpdateMessage;
 

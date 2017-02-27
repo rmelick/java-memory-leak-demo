@@ -1,4 +1,4 @@
-package com.github.rmelick.memory.service;
+package com.github.rmelick.memory.service.cache;
 
 /**
  * Internal representation of the guid plus name to be used in the device cache map
