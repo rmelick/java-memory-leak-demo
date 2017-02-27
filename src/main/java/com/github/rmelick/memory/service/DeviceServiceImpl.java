@@ -2,6 +2,7 @@ package com.github.rmelick.memory.service;
 
 import com.github.rmelick.memory.api.DeviceService;
 import com.github.rmelick.memory.api.DeviceUpdateMessage;
+import com.github.rmelick.memory.api.DeviceUpdateMessages;
 
 /**
  *
@@ -11,9 +12,11 @@ public class DeviceServiceImpl implements DeviceService {
   private final DeviceDB deviceDB = new DeviceDB();
 
   @Override
-  public void receiveMessage(DeviceUpdateMessage deviceUpdateMessage) {
-    deviceCache.updateFromMessage(deviceUpdateMessage);
-    deviceDB.updateFromMessage(deviceUpdateMessage);
+  public void receiveMessage(DeviceUpdateMessages deviceUpdateMessages) {
+    for (DeviceUpdateMessage deviceUpdateMessage : deviceUpdateMessages.getDeviceUpdateMessages()) {
+      deviceCache.updateFromMessage(deviceUpdateMessage);
+      deviceDB.updateFromMessage(deviceUpdateMessage);
+    }
   }
 
   @Override

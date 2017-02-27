@@ -1,56 +1,50 @@
 package com.github.rmelick.memory.app;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.rmelick.memory.api.DeviceService;
+import com.github.rmelick.memory.api.DeviceUpdateMessages;
 import com.github.rmelick.memory.service.DeviceServiceImpl;
+import io.vertx.core.Vertx;
+import io.vertx.core.VertxOptions;
+import io.vertx.core.http.HttpServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
+import java.io.IOException;
 
 public class App {
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     public static void main(String[] args) throws InterruptedException {
-        new App().run();
+        new App().run(args);
     }
 
-    public void run() throws InterruptedException {
+    public void run(String[] args) throws InterruptedException {
         LOGGER.info("Starting application");
+        final DeviceService deviceService = new DeviceServiceImpl();
 
-        DeviceService deviceService = new DeviceServiceImpl();
-
-        List<DeviceSimulator> devices = new ArrayList<>();
-        for (int i = 0; i < 10000; i++) {
-            devices.add(DeviceSimulator.random());
-        }
-
-        AtomicLong batchCounter = new AtomicLong(0);
-
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleWithFixedDelay(
-          () -> {
-              long batch = batchCounter.incrementAndGet();
-              try {
-                  LOGGER.info("Updating devices batch " + batch);
-                  for (DeviceSimulator device : devices) {
-                      deviceService.receiveMessage(device.getUpdate());
-                  }
-                  LOGGER.info("Completed update batch " + batch);
-              } catch (Throwable t) {
-                  LOGGER.error("Failed to update batch " + batch, t);
-              }
-          },
-          0,
-          1,
-          TimeUnit.SECONDS
-        );
-
-        new CountDownLatch(1).await(30, TimeUnit.MINUTES);
+        VertxOptions vertxOptions = new VertxOptions();
+        vertxOptions.setWorkerPoolSize(100);
+        Vertx vertx = Vertx.vertx();
+        HttpServer httpServer = vertx.createHttpServer();
+        httpServer.requestHandler(request -> {
+            request.bodyHandler(body -> {
+                try {
+                    DeviceUpdateMessages parsedMessage = OBJECT_MAPPER.readValue(body.toString(), DeviceUpdateMessages.class);
+                    deviceService.receiveMessage(parsedMessage);
+                    request.response().end();
+                } catch (IOException e) {
+                    LOGGER.error("Could not parse incoming message", e);
+                }
+            });
+        });
+        httpServer.listen(8080, "0.0.0.0", startupComplete -> {
+            if (startupComplete.succeeded()) {
+                LOGGER.info("Application startup complete");
+            } else {
+                LOGGER.error("Application startup failed", startupComplete.cause());
+            }
+        });
     }
 }

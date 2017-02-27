@@ -18,12 +18,12 @@ public class DeviceSimulator {
 
   private final String guid;
   private final Map<String, Double> tagValues;
+  public static final int NUMBER_OF_TAGS = 100;
 
   public static DeviceSimulator random() {
     String guid = UUID.randomUUID().toString();
-    int numberOfTags = 10;
-    List<String> tagNames = new ArrayList<>(numberOfTags);
-    for (int i = 0; i < numberOfTags; i++) {
+    List<String> tagNames = new ArrayList<>(NUMBER_OF_TAGS);
+    for (int i = 0; i < NUMBER_OF_TAGS; i++) {
       tagNames.add(RandomStringUtils.randomAlphabetic(10));
     }
     return new DeviceSimulator(guid, tagNames);

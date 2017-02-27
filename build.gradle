@@ -23,6 +23,8 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.22'
     compile 'commons-lang:commons-lang:2.6'
     compile 'com.h2database:h2:1.4.193'
+    compile 'io.vertx:vertx-core:3.3.3'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.4'
     runtime 'org.slf4j:slf4j-simple:1.7.22'
 
     // Use JUnit test framework

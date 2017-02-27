@@ -1,5 +1,7 @@
 package com.github.rmelick.memory.api;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Map;
 
 /**
@@ -10,7 +12,9 @@ public class DeviceUpdateMessage {
   private final long timestampMs;
   private final Map<String, Double> tagValues;
 
-  public DeviceUpdateMessage(String deviceGuid, long timestampMs, Map<String, Double> tagValues) {
+  public DeviceUpdateMessage(@JsonProperty("deviceGuid") String deviceGuid,
+                             @JsonProperty("timestampMs") long timestampMs,
+                             @JsonProperty("tagValues") Map<String, Double> tagValues) {
     this.deviceGuid = deviceGuid;
     this.timestampMs = timestampMs;
     this.tagValues = tagValues;
