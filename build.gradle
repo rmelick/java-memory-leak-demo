@@ -34,3 +34,12 @@ dependencies {
 // Define the main class for the application
 mainClassName = 'com.github.rmelick.memory.app.App'
 applicationDefaultJvmArgs = ["-Xmx256m", "-XX:+HeapDumpOnOutOfMemoryError"]
+
+test {
+    testLogging {
+        // Make sure output from
+        // standard out or error is shown
+        // in Gradle output.
+        showStandardStreams = true
+    }
+}
