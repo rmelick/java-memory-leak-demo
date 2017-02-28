@@ -22,10 +22,14 @@ public class GuidAndName {
 
   @Override
   public String toString() {
-    return "GuidAndName{" +
-      "guid='" + guid + '\'' +
-      ", name='" + name + '\'' +
-      '}';
+    StringBuilder output = new StringBuilder();
+    output.append("GuidAndName{");
+    output.append("guid='");
+    output.append(guid);
+    output.append(", name='");
+    output.append(name);
+    output.append('}');
+    return output.toString();
   }
 
   @Override
