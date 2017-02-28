@@ -15,7 +15,8 @@ These may look like a memory leak, but they mirror actual scenarios you see in p
 ## Expensive hashCode 
   Problem: An expensive hashcode is defined for something used as a key in a HashMap
   Class: GuidAndName
-  How to discover it: Cpu profiling
+  How to discover it: Cpu profiling.  Go to "method list", sort by self time, and look for methods from our code
+  (com.github.rmelick)
   
 # False cpu performance problems:
 ## Jackson deserialization
